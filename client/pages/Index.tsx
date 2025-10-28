@@ -23,7 +23,7 @@ export default function Index() {
     let videoElement: HTMLVideoElement | null = null;
     
     const script = document.createElement('script');
-    script.src="https://scripts.converteai.net/cd080c38-edae-4bc7-a6d5-8dd4c2328a90/players/68cb3b25ecf375f84cb1475d/v4/player.js";
+    script.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";
     script.async=true;
     document.head.appendChild(script);
     
@@ -197,15 +197,19 @@ export default function Index() {
 
           {/* Video Section */}
           <div className="mb-12">
-            <div className="relative max-w-[640px] mx-auto">
-              <div className="relative rounded-2xl overflow-hidden shadow-[0_12px_30px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_40px_rgba(255,209,102,0.1)] transition-all duration-300">
-                <vturb-smartplayer 
-                  id="vid-68cb3b25ecf375f84cb1475d" 
-                  style={{ 
-                    display: 'block', 
-                    margin: '0 auto', 
-                    width: '100%', 
-                    maxWidth: '400px'
+            <div id="ifr_6901427cbf9ab80e003b8628_wrapper" style={{ margin: '0 auto', width: '100%', maxWidth: '400px' }}>
+              <div style={{ position: 'relative', padding: '177.77777777777777% 0 0 0' }} id="ifr_6901427cbf9ab80e003b8628_aspect">
+                <iframe
+                  frameBorder="0"
+                  allowFullScreen
+                  src="about:blank"
+                  id="ifr_6901427cbf9ab80e003b8628"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  referrerPolicy="origin"
+                  onLoad={(e) => {
+                    const iframe = e.currentTarget;
+                    iframe.onload = null;
+                    iframe.src = 'https://scripts.converteai.net/cd080c38-edae-4bc7-a6d5-8dd4c2328a90/players/6901427cbf9ab80e003b8628/v4/embed.html' + (window.location.search || '?') + '&vl=' + encodeURIComponent(window.location.href);
                   }}
                 />
               </div>

@@ -21,28 +21,32 @@ export default function Index() {
   useEffect(() => {
     let checkPlayerInterval: NodeJS.Timeout;
     let videoElement: HTMLVideoElement | null = null;
-    
-    const script = document.createElement('script');
-    script.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";
-    script.async=true;
-    document.head.appendChild(script);
-    
+    let scriptAdded = false;
+
+    if (!document.querySelector('script[src*="smartplayer-wc/v4/sdk.js"]')) {
+      const script = document.createElement('script');
+      script.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";
+      script.async=true;
+      document.head.appendChild(script);
+      scriptAdded = true;
+    }
+
     // Check for smartplayer availability
     checkPlayerInterval = setInterval(() => {
       if (window.smartplayer && window.smartplayer.instances && window.smartplayer.instances.length > 0) {
         const playerInstance = window.smartplayer.instances[0];
         if (playerInstance && playerInstance.video && typeof playerInstance.video.addEventListener === 'function') {
           videoElement = playerInstance.video;
-          
+
           // Add timeupdate event listener
           const handleTimeUpdate = () => {
             if (videoElement && videoElement.currentTime >= BUTTON_SHOW_TIME) {
               setShowCTAButton(true);
             }
           };
-          
+
           videoElement.addEventListener('timeupdate', handleTimeUpdate);
-          
+
           // Clear the interval once we've set up the listener
           clearInterval(checkPlayerInterval);
         }
@@ -202,15 +206,10 @@ export default function Index() {
                 <iframe
                   frameBorder="0"
                   allowFullScreen
-                  src="about:blank"
+                  src={`https://scripts.converteai.net/cd080c38-edae-4bc7-a6d5-8dd4c2328a90/players/6901427cbf9ab80e003b8628/v4/embed.html${window.location.search || '?'}${window.location.search ? '&' : ''}vl=${encodeURIComponent(window.location.href)}`}
                   id="ifr_6901427cbf9ab80e003b8628"
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                   referrerPolicy="origin"
-                  onLoad={(e) => {
-                    const iframe = e.currentTarget;
-                    iframe.onload = null;
-                    iframe.src = 'https://scripts.converteai.net/cd080c38-edae-4bc7-a6d5-8dd4c2328a90/players/6901427cbf9ab80e003b8628/v4/embed.html' + (window.location.search || '?') + '&vl=' + encodeURIComponent(window.location.href);
-                  }}
                 />
               </div>
             </div>
